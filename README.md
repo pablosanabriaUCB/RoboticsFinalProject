@@ -1,4 +1,4 @@
-# 🤖👁️ Eye Tracker Arm - Brazo Robótico con Seguimiento de Ojos
+# Eye Tracker Arm - Brazo Robótico con Seguimiento de Ojos
 
 Control de un brazo robótico de **4 grados de libertad** que sigue la posición del rostro/ojos humanos usando **visión por computadora** (MediaPipe), **control visual directo en el espacio articular**, y **micro-ROS** (UART/Serial) para comunicación con el ESP32.
 
