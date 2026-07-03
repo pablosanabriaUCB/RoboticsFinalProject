@@ -1,0 +1,17 @@
+ik_node:
+  ros__parameters:
+    # Longitudes actualizadas del brazo 4-DOF (metros) - "Brazo Robot Final 2"
+    l1: 0.110   # Base a Hombro Z (0.060 + 0.050)
+    l2: 0.130   # Hombro a Codo X
+    l3: 0.160   # Codo a Muñeca X
+    l4: 0.100   # Muñeca a Punta X
+
+    joint_limits_lower: [-1.57, -1.57, -1.57, -1.57]
+    joint_limits_upper: [1.57, 1.57, 1.57, 1.57]
+
+    ik_max_iterations: 100
+    ik_tolerance: 0.005
+    ik_damping: 0.1
+    ik_step_size: 0.2
+    max_joint_speed: 1.5
+    control_rate: 30.0

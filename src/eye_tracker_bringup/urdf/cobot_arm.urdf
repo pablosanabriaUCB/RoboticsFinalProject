@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<robot name="robot_4dof">
+
+  <material name="dark_grey"><color rgba="0.25 0.25 0.28 1"/></material>
+  <material name="light_grey"><color rgba="0.65 0.65 0.68 1"/></material>
+  <material name="servo_blue"><color rgba="0.15 0.25 0.55 1"/></material>
+  <material name="aluminium"><color rgba="0.75 0.75 0.78 1"/></material>
+  <material name="orange_accent"><color rgba="0.95 0.55 0.10 1"/></material>
+
+  <!-- BASE -->
+  <link name="base_link">
+    <visual>
+      <geometry><cylinder radius="0.050" length="0.040"/></geometry>
+      <origin xyz="0 0 0.020" rpy="0 0 0"/>
+      <material name="dark_grey"/>
+    </visual>
+  </link>
+
+  <!-- LINK 1: Rotación de Base (Yaw) -->
+  <link name="link1">
+    <visual>
+      <geometry><box size="0.04 0.05 0.05"/></geometry>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <material name="servo_blue"/>
+    </visual>
+  </link>
+
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/>
+    <child  link="link1"/>
+    <!-- Altura l1 = 60mm -->
+    <origin xyz="0 0 0.060" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="50" velocity="2.0"/>
+  </joint>
+
+  <!-- LINK 2: Brazo Superior (Pitch) -->
+  <link name="link2">
+    <visual>
+      <geometry><box size="0.130 0.03 0.02"/></geometry>
+      <origin xyz="0.065 0 0" rpy="0 0 0"/>
+      <material name="aluminium"/>
+    </visual>
+  </link>
+
+  <joint name="joint2" type="revolute">
+    <parent link="link1"/>
+    <child  link="link2"/>
+    <origin xyz="0 0 0.050" rpy="0 0 0"/>
+    <axis xyz="0 -1 0"/> <!-- Invertido para que +q suba el brazo -->
+    <limit lower="-1.57" upper="1.57" effort="50" velocity="2.0"/>
+  </joint>
+
+  <!-- LINK 3: Antebrazo (Pitch) -->
+  <link name="link3">
+    <visual>
+      <geometry><box size="0.160 0.025 0.02"/></geometry>
+      <origin xyz="0.080 0 0" rpy="0 0 0"/>
+      <material name="light_grey"/>
+    </visual>
+  </link>
+
+  <joint name="joint3" type="revolute">
+    <parent link="link2"/>
+    <child  link="link3"/>
+    <!-- Distancia l2 = 130mm -->
+    <origin xyz="0.130 0 0" rpy="0 0 0"/>
+    <axis xyz="0 -1 0"/> <!-- Invertido para que +q suba el brazo -->
+    <limit lower="-1.57" upper="1.57" effort="30" velocity="2.0"/>
+  </joint>
+
+  <!-- LINK 4: Muñeca y Efector (Pitch) -->
+  <link name="link4">
+    <visual>
+      <geometry><box size="0.100 0.04 0.03"/></geometry>
+      <origin xyz="0.050 0 0" rpy="0 0 0"/>
+      <material name="dark_grey"/>
+    </visual>
+    <visual>
+      <geometry><sphere radius="0.01"/></geometry>
+      <origin xyz="0.100 0 0" rpy="0 0 0"/>
+      <material name="orange_accent"/>
+    </visual>
+  </link>
+
+  <joint name="joint4" type="revolute">
+    <parent link="link3"/>
+    <child  link="link4"/>
+    <!-- Distancia l3 = 160mm -->
+    <origin xyz="0.160 0 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/> <!-- CAMBIADO: Movimiento de torsión (Roll) -->
+    <limit lower="-1.57" upper="1.57" effort="15" velocity="2.0"/>
+  </joint>
+
+  <!-- EFECTOR FINAL (Punta teórica) -->
+  <link name="tool0">
+    <visual>
+      <geometry><sphere radius="0.005"/></geometry>
+      <material name="orange_accent"/>
+    </visual>
+  </link>
+  <joint name="joint_flange" type="fixed">
+    <parent link="link4"/>
+    <child  link="tool0"/>
+    <!-- Distancia l4 = 100mm -->
+    <origin xyz="0.100 0 0" rpy="0 0 0"/>
+  </joint>
+
+</robot>
